@@ -1,0 +1,30 @@
+.data
+.text
+    main:
+    #ler o numero i
+        li $v0,5    #$v0 = 5
+        syscall
+        move $t0, $v0   #$t0 = $v0
+        #i = $t0
+    
+    #ler o numero j
+        li $v0,5    #$v0 = 5
+        syscall
+        move $t1, $v0   #$t1 = $v0
+        #j = $t1
+
+    #ler o numero N
+        li $v0,5    #$v0 = 5
+        syscall
+        move $t2, $v0   #$t2 = $v0
+        #N = $t2
+
+        sll	$t1, $t1, 2	 #j*4
+        add $t1, $t1,$s0 #A[j]
+        lw $t1,0($t1) #A[j]
+
+        add $a1,$t1,$t2 #A[j]+N
+        
+        sll $t0,$t0,2 #i*4
+        add $t0,$t0,$s0 #A[i]
+        sw $a1, 0($t0) #A[i] = A[j]+N
