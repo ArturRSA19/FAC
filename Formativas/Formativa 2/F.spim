@@ -1,0 +1,11 @@
+contaBits:
+    move $v0, $zero #Iniciando o contador de bits
+
+    loop:
+        beq $a0, $zero, fim #Se o valor de entrada for zero, vai para o fim
+        andi $t1, $a0, 1 #Fazendo a operação AND entre o valor de entrada e 1
+        srl $a0, $a0, 1 #Deslocando o valor de entrada para a direita
+        add $v0, $v0, $t1 #Somando o resultado da operação AND com o contador de bits
+        j loop #Volta para o loop
+    fim:
+        j $ra #Retorna para a função main
