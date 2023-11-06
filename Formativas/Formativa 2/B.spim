@@ -1,0 +1,42 @@
+.data
+.text
+    main:
+        # Leitura do número de elementos (n)
+        li $v0, 5             # Código da syscall para ler um inteiro
+        syscall               
+        move $t0, $v0         # Armazena o valor de n em $t0
+
+        # Inicializa a variável para armazenar o maior número como negativa infinita
+        li $t1, -2147483648   # Valor mínimo de um inteiro de 32 bits (2 complemento)
+
+    loop:
+        beq $t0, $zero, fim_loop  # Se n == 0, sai do loop
+
+        # Leitura de um número
+        li $v0, 5             # Código da syscall para ler um inteiro
+        syscall               
+        move $t2, $v0         # Armazena o número lido em $t2
+
+        # Verifica se o número lido é maior que o atual maior número armazenado
+        bgt $t2, $t1, att_maior
+
+        # Decrementa o contador e repete o loop
+        sub $t0, $t0, 1       # n = n - 1
+        j loop   # Salta de volta para o início do loop
+
+    att_maior:
+        move $t1, $t2         # Atualiza o maior número com o número lido
+
+        # Decrementa o contador e repete o loop
+        sub $t0, $t0, 1       # n = n - 1
+        j loop   # Salta de volta para o início do loop
+
+    fim_loop:
+        # Imprime o maior número
+        move $a0, $t1         # Coloca o maior número em $a0 para imprimir
+        li $v0, 1             # Código da syscall para imprimir um inteiro
+        syscall                            
+
+        # Termina o programa
+        li $v0, 10            # Código da syscall para sair do programa
+        syscall               
