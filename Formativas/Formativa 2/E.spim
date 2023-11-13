@@ -1,0 +1,29 @@
+elemDistintos:
+
+    loop:
+        beq $t1, $a1, end
+        
+        # Salvar elemento v[i - 1] em $t2
+        # Salvar elemento v[i] em $t3
+        sll $t2, $t1, 2
+        sll $t3, $t1, 2
+
+        addi $t2, -4
+        add $t2, $t2, $a0 # $t2 = &v[i - 1]
+        add $t3, $t3, $a0 # $t3 = &v[i]
+
+        lw $t2, 0($t2)
+        lw $t3, 0($t3)
+
+        # Incrementar 1 em i
+        addi $t1, 1
+
+        bne $t2, $t3, sum
+        j loop
+        sum:
+            addi $t0, 1
+        j loop
+
+    end:
+        move $v0, $t0
+        jr $ra
